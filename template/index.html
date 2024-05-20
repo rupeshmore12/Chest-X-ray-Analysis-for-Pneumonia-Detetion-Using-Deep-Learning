@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/staticFiles/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-custom navbar-mainbg">
+      <button
+        class="navbar-toggler"
+        type="button"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars text-white"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <div class="hori-selector">
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="fas fa-tachometer-alt"></i>HEALTH CARE PLUS</a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="far fa-address-book"></i
+            ></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="far fa-clone"></i>SUPPORT</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="far fa-calendar-alt"></i>FEEDBACK</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="far fa-chart-bar"></i>CONTACT US</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0);"
+              ><i class="far fa-copy"></i>ABOUT</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <h1>
+      Diagnostic Modelling Of Chest X-ray :<br />
+      For Pneumonia <br />
+      Detection
+    </h1>
+    <div id="container">
+      <form
+        id="upload-form"
+        action="/predict"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="file"
+          id="file"
+          accept="image/*"
+          onchange="displayImage(event)"
+          name="image"
+          required
+        /></div>
+        <div id="img-area" data-img="">
+          <i class="bx bxs-cloud-upload icon"></i>
+          <h3>Upload Image</h3>
+        </div>
+        <br /><br />
+        <button id="select-image">Select Image</button><br />
+        <button id="result" type="submit" class="predict-button">
+          Get Your Result
+        </button>
+      </form>
+    
+    <div id="pred">
+      <p id="text">{{ prediction_text }}</p>
+    </div>
+    <script>
+        const selectImage = document.querySelector("#select-image");
+        const inputFile = document.querySelector("#file");
+        const imgArea = document.querySelector("#img-area");
+        selectImage.addEventListener("click", function () {
+          inputFile.click();
+        });
+        inputFile.addEventListener("change", function () {
+          const image = this.files[0];
+          const reader = new FileReader();
+          reader.onload = () => {
+            const allImg = imgArea.querySelectorAll("img");
+            allImg.forEach((item) => item.remove());
+            const imgUrl = reader.result;
+            const img = document.createElement("img");
+            img.src = imgUrl;
+            imgArea.appendChild(img);
+            imgArea.classList.add("active");
+            imgArea.dataset.img = image.name;
+          };
+          reader.readAsDataURL(image);
+        });
+    </script>
+  </body>
+</html>
